@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,7 +25,12 @@ public class User implements Serializable {
 	private String email;
 	private String phone;
 	private String password;
-
+	/*
+	 * @JsonIgnore
+	 * Avoids looping since the association is two-way and nests this data on the
+	 * other side of the relationship
+	 */
+	@JsonIgnore
 	@OneToMany(mappedBy = "client") // Tells how the One is mapped into the table that represents the many
 	private List<Order> orders = new ArrayList<>();
 
