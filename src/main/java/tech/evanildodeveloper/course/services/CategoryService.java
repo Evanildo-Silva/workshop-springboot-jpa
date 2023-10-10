@@ -6,24 +6,24 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import tech.evanildodeveloper.course.entities.Order;
-import tech.evanildodeveloper.course.repositories.OrderRepository;
+import tech.evanildodeveloper.course.entities.Category;
+import tech.evanildodeveloper.course.repositories.CategoryRepository;
 
-@Service // Annotation to register as a spring component
-public class OrderService {
+@Service
+public class CategoryService {
 
     @Autowired // Annotation to register UserService as spring component for dependency
                // injection
-    private OrderRepository repository; // OrderRepository dependency
+    private CategoryRepository repository; // CategoryRepository dependency
 
     // Service method to run findAll on the repository
-    public List<Order> findAll() {
+    public List<Category> findAll() {
         return repository.findAll();
     }
 
     // Service method to run findById on the repository
-    public Order findById(Long id) {
-        Optional<Order> order = repository.findById(id);
-        return order.get();
+    public Category findById(Long id) {
+        Optional<Category> cat = repository.findById(id);
+        return cat.get();
     }
 }
