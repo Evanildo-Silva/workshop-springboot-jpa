@@ -1,6 +1,7 @@
 package tech.evanildodeveloper.course.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,5 +19,11 @@ public class UserService {
     // Service method to run findAll on the repository
     public List<User> findAll() {
         return repository.findAll();
+    }
+
+    // Service method to run findById on the repository
+    public User findById(Long id) {
+        Optional<User> user = repository.findById(id);
+        return user.get();
     }
 }
