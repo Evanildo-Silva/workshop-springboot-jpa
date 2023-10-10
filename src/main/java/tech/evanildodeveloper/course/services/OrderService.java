@@ -14,7 +14,7 @@ public class OrderService {
 
     @Autowired // Annotation to register UserService as spring component for dependency
                // injection
-    private OrderRepository repository; // UserRepository dependency
+    private OrderRepository repository; // OrderRepository dependency
 
     // Service method to run findAll on the repository
     public List<Order> findAll() {
