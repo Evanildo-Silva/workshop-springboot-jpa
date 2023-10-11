@@ -12,7 +12,7 @@ import tech.evanildodeveloper.course.repositories.OrderRepository;
 @Service // Annotation to register as a spring component
 public class OrderService {
 
-    @Autowired // Annotation to register UserService as spring component for dependency
+    @Autowired // Annotation to register OrderService as spring component for dependency
                // injection
     private OrderRepository repository; // OrderRepository dependency
 

@@ -12,7 +12,7 @@ import tech.evanildodeveloper.course.repositories.CategoryRepository;
 @Service
 public class CategoryService {
 
-    @Autowired // Annotation to register UserService as spring component for dependency
+    @Autowired // Annotation to register CategoryService as spring component for dependency
                // injection
     private CategoryRepository repository; // CategoryRepository dependency
 
