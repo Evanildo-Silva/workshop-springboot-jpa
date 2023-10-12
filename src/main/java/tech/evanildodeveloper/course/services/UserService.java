@@ -27,8 +27,13 @@ public class UserService {
         return user.get();
     }
 
-    // Service method to create user
+    // Service to user create method
     public User create(User user) {
         return repository.save(user);
+    }
+
+    // Service to user delete method
+    public void delete(Long id) {
+        repository.deleteById(id);
     }
 }
