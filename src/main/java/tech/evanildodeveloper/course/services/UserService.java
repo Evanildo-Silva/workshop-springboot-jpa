@@ -26,4 +26,9 @@ public class UserService {
         Optional<User> user = repository.findById(id);
         return user.get();
     }
+
+    // Service method to create user
+    public User create(User user) {
+        return repository.save(user);
+    }
 }
