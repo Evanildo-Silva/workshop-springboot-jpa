@@ -8,6 +8,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
+import jakarta.persistence.EntityNotFoundException;
 import tech.evanildodeveloper.course.entities.User;
 import tech.evanildodeveloper.course.repositories.UserRepository;
 import tech.evanildodeveloper.course.services.exceptions.DatabaseException;
@@ -49,9 +50,13 @@ public class UserService {
 
     // Service to user delete method
     public User update(Long id, User user) {
-        User entity = repository.getReferenceById(id); // getReferenceById: Faz com que o JPA monitore esse objeto
-        updateData(entity, user);
-        return repository.save(entity);
+        try {
+            User entity = repository.getReferenceById(id); // getReferenceById: Causes JPA to monitor this object
+            updateData(entity, user);
+            return repository.save(entity);
+        } catch (EntityNotFoundException e) {
+            throw new ResourceNotFoundException(id);
+        }
     }
 
     private void updateData(User entity, User user) {
