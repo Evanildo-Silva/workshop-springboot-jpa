@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import tech.evanildodeveloper.course.entities.User;
 import tech.evanildodeveloper.course.repositories.UserRepository;
+import tech.evanildodeveloper.course.services.exceptions.ResourceNotFoundException;
 
 @Service // Annotation to register as a spring component
 public class UserService {
@@ -24,7 +25,7 @@ public class UserService {
     // Service method to run findById on the repository
     public User findById(Long id) {
         Optional<User> user = repository.findById(id);
-        return user.get();
+        return user.orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
     // Service to user create method
