@@ -13,6 +13,9 @@ import tech.evanildodeveloper.course.entities.User;
 import tech.evanildodeveloper.course.repositories.UserRepository;
 import tech.evanildodeveloper.course.services.exceptions.DatabaseException;
 import tech.evanildodeveloper.course.services.exceptions.ResourceNotFoundException;
+import tech.evanildodeveloper.course.services.exceptions.ResourcesAlreadyRegisteredException;
+import tech.evanildodeveloper.course.services.records.UserUpdateRecord;
+import tech.evanildodeveloper.course.utils.Utils;
 
 @Service // Annotation to register as a spring component
 public class UserService {
@@ -32,6 +35,14 @@ public class UserService {
         return user.orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
+    // Service to check if the user exists
+    public void findByEmail(String email) {
+        User userExists = repository.findByEmail(email);
+        if (userExists != null) {
+            throw new ResourcesAlreadyRegisteredException();
+        }
+    }
+
     // Service to user create method
     public User create(User user) {
         return repository.save(user);
@@ -49,19 +60,13 @@ public class UserService {
     }
 
     // Service to user delete method
-    public User update(Long id, User user) {
+    public User update(Long id, UserUpdateRecord user) {
         try {
             User entity = repository.getReferenceById(id); // getReferenceById: Causes JPA to monitor this object
-            updateData(entity, user);
+            Utils.copyNonNullproperties(user, entity);
             return repository.save(entity);
         } catch (EntityNotFoundException e) {
             throw new ResourceNotFoundException(id);
         }
-    }
-
-    private void updateData(User entity, User user) {
-        entity.setName(user.getName());
-        entity.setEmail(user.getEmail());
-        entity.setPhone(user.getPhone());
     }
 }
