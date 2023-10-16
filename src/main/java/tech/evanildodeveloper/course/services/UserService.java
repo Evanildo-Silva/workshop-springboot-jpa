@@ -13,6 +13,7 @@ import tech.evanildodeveloper.course.entities.User;
 import tech.evanildodeveloper.course.repositories.UserRepository;
 import tech.evanildodeveloper.course.services.exceptions.DatabaseException;
 import tech.evanildodeveloper.course.services.exceptions.ResourceNotFoundException;
+import tech.evanildodeveloper.course.services.exceptions.ResourcesAlreadyRegisteredException;
 import tech.evanildodeveloper.course.services.records.UserUpdateRecord;
 import tech.evanildodeveloper.course.utils.Utils;
 
@@ -35,8 +36,11 @@ public class UserService {
     }
 
     // Service to check if the user exists
-    public User findByEmail(String email) {
-        return repository.findByEmail(email);
+    public void findByEmail(String email) {
+        User userExists = repository.findByEmail(email);
+        if (userExists != null) {
+            throw new ResourcesAlreadyRegisteredException();
+        }
     }
 
     // Service to user create method

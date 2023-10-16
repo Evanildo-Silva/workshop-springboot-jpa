@@ -17,6 +17,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import tech.evanildodeveloper.course.entities.User;
 import tech.evanildodeveloper.course.services.UserService;
+import tech.evanildodeveloper.course.services.records.UserUpdateRecord;
 
 @RestController
 @RequestMapping("/users")
@@ -48,6 +49,7 @@ public class UserController {
 
 	@PostMapping // @RequestBody Indicates that the request receives an objeto
 	public ResponseEntity<User> create(@RequestBody User user) {
+		service.findByEmail(user.getEmail());
 		User userCreated = service.create(user);
 
 		// Adds location header
@@ -66,7 +68,7 @@ public class UserController {
 	}
 
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<User> update(@PathVariable Long id, @RequestBody User user) {
+	public ResponseEntity<User> update(@PathVariable Long id, @RequestBody UserUpdateRecord user) {
 		User updatedUseruser = service.update(id, user);
 
 		return ResponseEntity.ok().body(updatedUseruser);
